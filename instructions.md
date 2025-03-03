@@ -6,7 +6,7 @@
 - pm2: https://pm2.keymetrics.io/
 - https://github.com/draphonix/browser-n8n-local
 
-# Install browser-n8n-local
+# Install browser-n8n-local trên máy tính cá nhân
 
 1. Clone project
 
@@ -58,6 +58,34 @@ pm2 stop 0
 pm2 delete 0
 pm2 start 0
 pm2 logs
+```
+
+# Install browser-n8n-local trên docker
+
+
+1. Clone project
+
+2. Vào thư mục vừa clone
+
+3. Tạo file env
+   
+5. Chỉnh file env
+
+6. Buil img
+
+```
+docker build -t browser-n8n-local .
+```
+
+7. Run container
+
+```
+docker run -d --name browser-use \
+  --network v-omv \
+  --hostname browser-use \
+  --restart unless-stopped \
+  -p 8001:8000 \
+  browser-n8n-local
 ```
 
 ## Install n8n-nodes-browser-use trên n8n
