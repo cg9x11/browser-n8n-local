@@ -30,6 +30,11 @@ RUN apt-get update && apt-get install -y \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Install Node.js and npx (required for Playwright)
+RUN apt-get update && apt-get install -y nodejs npm && \
+    npm install -g npx && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Copy the rest of the application
 COPY . .
 
@@ -49,6 +54,8 @@ USER appuser
 
 # Install Playwright browsers
 RUN playwright install
+
+RUN npx playwright install chromium
 
 # Set healthcheck to ensure the service is running properly
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 CMD curl -f http://localhost:8000/api/v1/ping || exit 1
